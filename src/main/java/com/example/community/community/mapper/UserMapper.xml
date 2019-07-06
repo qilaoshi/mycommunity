@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.community.community.mapper.UserMapper">
     <insert id="insert">
-        insert into user (username,accountId,token,gmtCreate,gmtModified) values (#{username},#{accountId},#{token},#{gmtCreate},#{gmtModified})
+        insert into user (username,accountId,token,gmtCreate,gmtModified,avatarUrl) values (#{username},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})
     </insert>
+    <select id="select" resultType="com.example.community.community.model.User">
+        select * from user where token=#{token}
+    </select>
 </mapper>
