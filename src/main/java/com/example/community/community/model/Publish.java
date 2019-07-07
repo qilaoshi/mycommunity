@@ -11,6 +11,14 @@ public class Publish {
     private int viewCount;
     private int likeCount;
     private String tag;
+    private User user;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getGmtCreate() {
         return gmtCreate;

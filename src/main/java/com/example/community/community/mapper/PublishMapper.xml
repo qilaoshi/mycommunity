@@ -4,4 +4,23 @@
     <insert id="insert">
         insert into publish (title, content, gmtCreate, gmtModified, creator,tag) values (#{title},#{content},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
+    <select id="select" resultMap="UserWithPublish">
+        select user.*,publish.* from user,publish where user.Id=publish.creator
+
+    </select>
+    <resultMap type="com.example.community.community.model.Publish" id="UserWithPublish">
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="creator" column="creator"/>
+        <result property="gmtCreate" column="gmtCreate"/>
+        <result property="gmtModified" column="gmtModified"/>
+        <result property="commentCount" column="commentCount"/>
+        <result property="viewCount" column="viewCount"/>
+        <result property="likeCount" column="likeCount"/>
+        <result property="tag" column="tag"/>
+        <association property="user" javaType="com.example.community.community.model.User">
+            <result property="username" column="username" />
+            <result property="avatarUrl" column="avatarUrl" />
+        </association>
+    </resultMap>
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class HelloController {
@@ -22,7 +23,7 @@ public class HelloController {
     private PublishService publishService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request,Model model) {
         Cookie[] cookies = request.getCookies();
         if (cookies!=null&&cookies.length!=0) {
         for (Cookie cookie : cookies) {
@@ -36,6 +37,11 @@ public class HelloController {
             }
         }
         }
+        List<Publish> publishList=publishService.select();
+        System.out.println(publishList+"pubish");
+        System.out.println(publishList.get(3).getId());
+        System.out.println(publishList.get(1).getUser().getAvatarUrl());
+        model.addAttribute("publishlist",publishList);
         return "index";
     }
 
