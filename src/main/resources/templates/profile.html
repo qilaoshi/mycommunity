@@ -3,27 +3,29 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; chraset=UTF-8">
     <title>community</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/my.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
-    <script src="jquery/jquery-3.3.1.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/my.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+    <script src="/jquery/jquery-3.3.1.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:replace="common/header"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <h2 th:text="${sectionName}"></h2>
             <hr>
-            <div class="media" th:each="publishlist:${publishlist}">
+            <div class="media" th:each="publishlist:${publishListByCreator}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${publishlist.user.avatarUrl}">
+                        <img class="media-object img-rounded" src="">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${publishlist.title}"></h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${publishlist.id}}" th:text="${publishlist.title}"></a>
+                    </h4>
                     <span th:text="${publishlist.content}"></span><br>
                     <span class="text-desc">
                         <span th:text="${publishlist.commentCount}"></span>个回复·
@@ -35,6 +37,10 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h1>热门话题</h1>
+            <div class="list-group">
+                <a href="/profile/question" th:class="${section=='question'}? 'list-group-item active':'list-group-item'" >我的问题</a>
+                <a href="/profile/replies" th:class="${section=='replies'}? 'list-group-item active':'list-group-item'">最新回复<span class="badge">14</span></a>
+            </div>
         </div>
     </div>
 </div>

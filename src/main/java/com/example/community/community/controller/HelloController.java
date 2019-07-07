@@ -23,20 +23,9 @@ public class HelloController {
     private PublishService publishService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies!=null&&cookies.length!=0) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                User user = userService.select(token);
-                if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                }
-                break;
-            }
-        }
-        }
+    public String index(HttpServletRequest request,Model model,
+                        @RequestParam(name="page",defaultValue = "1")int page,
+                        @RequestParam(name = "size",defaultValue = "5")int size) {
         List<Publish> publishList=publishService.select();
         System.out.println(publishList+"pubish");
         System.out.println(publishList.get(3).getId());
@@ -55,19 +44,7 @@ public class HelloController {
     @GetMapping("/do_publish")
     public String doPublish(Publish publish,HttpServletRequest request,Model model){
         Cookie[] cookies = request.getCookies();
-        User user = null;
-        if (cookies!=null&&cookies.length!=0) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    user = userService.select(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user =  (User)request.getSession().getAttribute("user");
         if (user==null){
             model.addAttribute("error","未登录不能发布帖子");
             return "publish";

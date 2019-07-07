@@ -22,4 +22,14 @@ public class PublishServiceImpl implements PublishService {
     public List<Publish> select() {
         return publishMapper.select();
     }
+
+    @Override
+    public List<Publish> selectByCreator(int id) {
+        return publishMapper.selectByCreator(id);
+    }
+
+    @Override
+    public List<Publish> selectById(int id) {
+        return publishMapper.selectById(id);
+    }
 }

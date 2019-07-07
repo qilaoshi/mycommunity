@@ -8,6 +8,12 @@
         select user.*,publish.* from user,publish where user.Id=publish.creator
 
     </select>
+    <select id="selectByCreator" resultType="com.example.community.community.model.Publish">
+        select * from publish where creator=#{id}
+    </select>
+    <select id="selectById" resultType="com.example.community.community.model.Publish">
+        select * from publish where Id=#{id}
+    </select>
     <resultMap type="com.example.community.community.model.Publish" id="UserWithPublish">
         <result property="title" column="title"/>
         <result property="content" column="content"/>

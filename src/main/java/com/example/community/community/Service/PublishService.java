@@ -7,4 +7,6 @@ import java.util.List;
 public interface PublishService {
     void insert(Publish publish);
     List<Publish> select();
+    List<Publish> selectByCreator(int id);
+    List<Publish> selectById(int id);
 }

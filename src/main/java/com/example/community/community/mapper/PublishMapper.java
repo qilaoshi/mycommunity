@@ -9,4 +9,6 @@ import java.util.List;
 public interface PublishMapper {
     void insert(Publish publish);
     List<Publish> select();
+    List<Publish> selectByCreator(int id);
+    List<Publish> selectById(int id);
 }
