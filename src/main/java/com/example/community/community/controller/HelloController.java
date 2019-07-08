@@ -27,11 +27,20 @@ public class HelloController {
                         @RequestParam(name="page",defaultValue = "1")int page,
                         @RequestParam(name = "size",defaultValue = "5")int size) {
         List<Publish> publishList=publishService.select();
-        System.out.println(publishList+"pubish");
-        System.out.println(publishList.get(3).getId());
-        System.out.println(publishList.get(1).getUser().getAvatarUrl());
+        System.out.println(publishList.get(0).getId()+"pubish");
+        System.out.println(publishList.get(0).getCreator()+"pubish");
         model.addAttribute("publishlist",publishList);
         return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie=new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 
     //发起帖子

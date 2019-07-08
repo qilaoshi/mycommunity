@@ -9,4 +9,5 @@ public interface PublishService {
     List<Publish> select();
     List<Publish> selectByCreator(int id);
     List<Publish> selectById(int id);
+    void updatViewCount(int id);
 }

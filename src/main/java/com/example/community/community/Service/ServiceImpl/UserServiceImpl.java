@@ -19,4 +19,13 @@ public class UserServiceImpl implements UserService {
     public User select(String token) {
         return userMapper.select(token);
     }
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
+    }
+
+    @Override
+    public User selectByAccountId(int accountId) {
+        return userMapper.selectByAccountId(accountId);
+    }
 }

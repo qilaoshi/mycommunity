@@ -32,4 +32,9 @@ public class PublishServiceImpl implements PublishService {
     public List<Publish> selectById(int id) {
         return publishMapper.selectById(id);
     }
+
+    @Override
+    public void updatViewCount(int id) {
+        publishMapper.updateViewCount(id);
+    }
 }

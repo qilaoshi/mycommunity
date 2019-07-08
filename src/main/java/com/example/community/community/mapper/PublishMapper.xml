@@ -4,17 +4,20 @@
     <insert id="insert">
         insert into publish (title, content, gmtCreate, gmtModified, creator,tag) values (#{title},#{content},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
+    <update id="updateViewCount">
+        update publish set viewCount=viewCount+1 where Id=#{id}
+    </update>
     <select id="select" resultMap="UserWithPublish">
-        select user.*,publish.* from user,publish where user.Id=publish.creator
-
+        select publish.*,user.* from publish,user where publish.creator=user.Id
     </select>
     <select id="selectByCreator" resultType="com.example.community.community.model.Publish">
         select * from publish where creator=#{id}
     </select>
-    <select id="selectById" resultType="com.example.community.community.model.Publish">
-        select * from publish where Id=#{id}
+    <select id="selectById" resultMap="UserWithPublish">
+        select publish.*,user.* from publish,user where publish.Id=#{id}
     </select>
     <resultMap type="com.example.community.community.model.Publish" id="UserWithPublish">
+        <id property="id" column="id" />
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="creator" column="creator"/>
@@ -25,6 +28,7 @@
         <result property="likeCount" column="likeCount"/>
         <result property="tag" column="tag"/>
         <association property="user" javaType="com.example.community.community.model.User">
+            <id property="id" column="id" />
             <result property="username" column="username" />
             <result property="avatarUrl" column="avatarUrl" />
         </association>

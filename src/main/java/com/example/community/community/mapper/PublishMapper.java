@@ -11,4 +11,5 @@ public interface PublishMapper {
     List<Publish> select();
     List<Publish> selectByCreator(int id);
     List<Publish> selectById(int id);
+    void updateViewCount(int id);
 }
