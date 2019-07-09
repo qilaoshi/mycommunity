@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class CommentCtroller {
+public class CommentController {
     @Autowired
     private CommentService commentService;
 
@@ -42,4 +42,23 @@ public class CommentCtroller {
             return commonJsonDto;
         }
     }
+
+    @PostMapping("/comments")
+    @ResponseBody
+    public Object selectComments(@RequestBody Comment comment,
+                                 HttpServletRequest request){
+        System.out.println("c is "+comment.getId());
+        System.out.println("type is "+ comment.getType());
+        List<Comment> list=commentService.selectByCommentId(comment);
+        System.out.println(commentService.selectByCommentId(comment).size()+"size");
+        CommonJsonDto<List<Comment>> commonJsonDto=new CommonJsonDto();
+        if (commentService.selectByCommentId(comment)==null&&commentService.selectByCommentId(comment).size()==0){
+            commonJsonDto.setMsg("false");
+        }else {
+            commonJsonDto.setData(list);
+            commonJsonDto.setMsg("ok");
+        }
+        return commonJsonDto;
+    }
+
 }

@@ -5,4 +5,28 @@
         insert into comment (parentId, type, commentator, gmtCreate, gmtModified, content) values (#{parentId},#{type},
         #{commentator},#{gmtCreate},#{gmtModified},#{content})
     </insert>
+    <select id="select" resultMap="CommemyByUser">
+        select comment.*,user.* from comment,user where parentId=#{id} and user.id=comment.commentator order by #{gmtCreate};
+    </select>
+    <select id="commentCount" resultType="java.lang.Integer">
+        select count(*) from comment where parentId=#{id};
+    </select>
+    <select id="selectByCommentId" resultMap="CommemyByUser">
+       select comment.*,user.* from comment,user where comment.parentId=#{id} and user.id=comment.commentator and type=#{type}
+    </select>
+    <resultMap type="com.example.community.community.model.Comment" id="CommemyByUser">
+        <id property="id" column="id"/>
+        <result property="commentator" column="commentator"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="parentId" column="parentId"/>
+        <result property="likeCount" column="likeCount"/>
+        <result property="gmtCreate" column="gmtCreate"/>
+        <result property="gmtModified" column="gmtModified"/>
+        <association property="user" javaType="com.example.community.community.model.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="avatarUrl" column="avatarUrl"/>
+        </association>
+    </resultMap>
 </mapper>

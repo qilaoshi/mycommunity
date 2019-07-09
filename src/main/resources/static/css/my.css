@@ -73,12 +73,20 @@ body {
     margin-top: 5px;
 }
 
-.menu .icon {
+.menu {
     margin-right: 6px;
     font-size: 15px;
     cursor: pointer;
 
 }
+
+.icon {
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
 .menu .active{
     color: #499ef3;
 }
