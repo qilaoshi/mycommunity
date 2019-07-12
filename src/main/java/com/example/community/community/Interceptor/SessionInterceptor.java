@@ -2,6 +2,10 @@ package com.example.community.community.Interceptor;
 
 import com.example.community.community.Service.UserService;
 import com.example.community.community.model.User;
+import org.apache.catalina.security.SecurityUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +21,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("执行cookie");
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -24,6 +29,9 @@ public class SessionInterceptor implements HandlerInterceptor {
                     String token = cookie.getValue();
                     User user = userService.select(token);
                     if (user != null) {
+                        Subject subject= SecurityUtils.getSubject();
+                        UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(user.getUsername(),user.getPassword());
+                        subject.login(usernamePasswordToken);
                         request.getSession().setAttribute("user", user);
                     }
                     break;

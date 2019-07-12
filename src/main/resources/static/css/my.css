@@ -94,3 +94,25 @@ body {
 .menu .icon:hover {
     color: #499ef3;
 }
+
+.tag-left{
+    margin-right: 5px;
+}
+.question-line{
+    margin-left: 0px;
+    line-height: 20px;
+    list-style: none;
+    padding-left: 0px;
+    font-size: 18px;
+}
+.login-div{
+    margin-top: 150px;
+    margin-left: 380px;
+    border: 1px solid;
+    padding: 40px;
+    background-color: white;
+    border-color: white;
+}
+.text-class{
+    font-size: x-large;
+}

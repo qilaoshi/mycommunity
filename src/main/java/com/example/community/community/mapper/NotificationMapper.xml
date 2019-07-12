@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.community.community.mapper.NotificationMapper">
+    <insert id="insert">
+        insert into notification (notifier, receiver, outerId, gmtCreate) values (#{notifier},#{receiver},#{outerId},#{gmtCreate})
+    </insert>
+    <select id="allCount" resultType="java.lang.Integer">
+        select count(*) from notification where receiver=#{receiver}
+    </select>
+    <select id="selectAll" resultMap="notification">
+       select publish.*,notification.*,user.* from notification,user,publish where notification.notifier=user.userId and receiver=#{id} and publish.id=notification.outerId
+    </select>
+    <resultMap type="com.example.community.community.model.Publish" id="notification">
+        <id property="id" column="id"/>
+        <result property="content" column="content" />
+        <association property="user" javaType="com.example.community.community.model.User">
+            <id property="userId" column="userId"/>
+            <result property="username" column="username"/>
+        </association>
+    </resultMap>
+</mapper>

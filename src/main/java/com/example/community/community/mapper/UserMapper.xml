@@ -4,6 +4,9 @@
     <insert id="insert">
         insert into user (username,accountId,token,gmtCreate,gmtModified,avatarUrl) values (#{username},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})
     </insert>
+    <update id="insertToken">
+        update user set token=#{token} where userId=#{userId}
+    </update>
     <update id="update">
         update user set token=#{token},username=#{username},gmtModified=#{gmtModified},avatarUrl=#{avatarUrl} where accountId=#{accountId}
     </update>
@@ -12,5 +15,8 @@
     </select>
     <select id="selectByAccountId" resultType="com.example.community.community.model.User">
         select * from user where accountId =#{accountId}
+    </select>
+    <select id="selectUser" resultType="com.example.community.community.model.User">
+        select * from user where username=#{username}
     </select>
 </mapper>

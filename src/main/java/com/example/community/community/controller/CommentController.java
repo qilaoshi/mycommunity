@@ -7,10 +7,7 @@ import com.example.community.community.model.User;
 import org.hibernate.validator.constraints.EAN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class CommentController {
             return commonJsonDto;
         }else {
             User user=(User)request.getSession().getAttribute("user");
-            comment.setCommentator(user.getId());
+            comment.setCommentator(user.getUserId());
             comment.setGmtCreate(System.currentTimeMillis());
             comment.setGmtModified(comment.getGmtCreate());
             commentService.insert(comment);

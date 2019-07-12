@@ -24,18 +24,17 @@ public class QuestionController {
     private CommentService commentService;
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id")int publishId,
-                           Model model,
-                           HttpServletRequest request){
+                           Model model){
         List<Publish> list=publishService.selectById(publishId);
         List<Comment> commentList=commentService.select(publishId);
+        System.out.println(commentList.size()+"评论长");
         int commentCount=commentService.commentCount(publishId);
         publishService.updatViewCount(list.get(0).getId());
-        System.out.println(publishId);
-        System.out.println(list+"list is");
-        User user= (User) request.getSession().getAttribute("user");
+        List<Publish> tagList=publishService.selectByTag(list.get(0));
         model.addAttribute("onePublishList",list.get(0));
         model.addAttribute("commentList",commentList);
         model.addAttribute("commentCount",commentCount);
+        model.addAttribute("tagList",tagList);
         return "question";
     }
 }

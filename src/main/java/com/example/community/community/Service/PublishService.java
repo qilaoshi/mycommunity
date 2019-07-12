@@ -10,4 +10,5 @@ public interface PublishService {
     List<Publish> selectByCreator(int id);
     List<Publish> selectById(int id);
     void updatViewCount(int id);
+    List<Publish> selectByTag(Publish publish);
 }

@@ -1,5 +1,6 @@
 package com.example.community.community.controller;
 
+import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.PublishService;
 import com.example.community.community.Service.UserService;
 import com.example.community.community.model.Publish;
@@ -21,14 +22,17 @@ public class HelloController {
     private UserService userService;
     @Autowired
     private PublishService publishService;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model,
-                        @RequestParam(name="page",defaultValue = "1")int page,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
+    public String index(Model model,HttpServletRequest request) {
         List<Publish> publishList=publishService.select();
-        System.out.println(publishList.get(0).getId()+"pubish");
-        System.out.println(publishList.get(0).getCreator()+"pubish");
+        User user=(User)request.getSession().getAttribute("user");
+        if (user!=null) {
+            int allCount = notificationService.allCount(user.getUserId());
+            request.getSession().setAttribute("messageCount",allCount);
+        }
         model.addAttribute("publishlist",publishList);
         return "index";
     }
@@ -72,7 +76,7 @@ public class HelloController {
         }
         publish.setGmtCreate(System.currentTimeMillis());
         publish.setGmtModified(publish.getGmtCreate());
-        publish.setCreator(user.getId());
+        publish.setCreator(user.getUserId());
         publishService.insert(publish);
         return "redirect:/";
     }

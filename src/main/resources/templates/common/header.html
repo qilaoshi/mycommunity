@@ -18,6 +18,7 @@
                 <li class="dropdown" th:if="${session.user!=null}">
                     <a href="/publish" class="dropdown-toggle">发布</a>
                 </li>
+                <li><a href="/profile/replies" >通知<span class="badge" th:text="${session.messageCount}"></span></a></li>
                 <li class="dropdown" th:if="${session.user!=null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getUsername()}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -27,7 +28,7 @@
                     </ul>
                 </li>
                 <li th:if="${session.user==null}">
-                    <a href="https://github.com/login/oauth/authorize?client_id=dca6c89b8328318f1052&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
+                    <a href="/login">登录</a>
                 </li>
             </ul>
         </div>

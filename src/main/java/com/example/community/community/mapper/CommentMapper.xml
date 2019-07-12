@@ -6,13 +6,13 @@
         #{commentator},#{gmtCreate},#{gmtModified},#{content})
     </insert>
     <select id="select" resultMap="CommemyByUser">
-        select comment.*,user.* from comment,user where parentId=#{id} and user.id=comment.commentator order by #{gmtCreate};
+        select comment.*,user.* from comment,user where comment.parentId=#{id} and user.userId=comment.commentator
     </select>
     <select id="commentCount" resultType="java.lang.Integer">
         select count(*) from comment where parentId=#{id};
     </select>
     <select id="selectByCommentId" resultMap="CommemyByUser">
-       select comment.*,user.* from comment,user where comment.parentId=#{id} and user.id=comment.commentator and type=#{type}
+       select comment.*,user.* from comment,user where comment.parentId=#{id} and user.userId=comment.commentator and type=#{type}
     </select>
     <resultMap type="com.example.community.community.model.Comment" id="CommemyByUser">
         <id property="id" column="id"/>
@@ -24,7 +24,7 @@
         <result property="gmtCreate" column="gmtCreate"/>
         <result property="gmtModified" column="gmtModified"/>
         <association property="user" javaType="com.example.community.community.model.User">
-            <id property="id" column="id"/>
+            <id property="userId" column="userId"/>
             <result property="username" column="username"/>
             <result property="avatarUrl" column="avatarUrl"/>
         </association>

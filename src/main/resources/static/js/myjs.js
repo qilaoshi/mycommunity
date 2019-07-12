@@ -1,8 +1,32 @@
 function post() {
-    var  questionId = $("#question_id").val();
+    var questionId = $("#question_id").val();
+    var userId=$("#user_id").val();
     var content = $("#comment_content").val();
+    notification(userId,questionId);
     comment2target(questionId,1,content);
 }
+
+//添加到通知
+function notification(receiver,outerId) {
+    $.ajax({
+        type:"POST",
+        url:"/notification",
+        contentType:'application/json',
+        dataType:"json",
+        data:JSON.stringify({
+            "receiver":receiver,
+            "outerId":outerId,
+        }),
+        success:function (data) {
+            alert("通知一手")
+        },
+        error:function () {
+            alert("通知接口异常");
+        },
+    });
+}
+
+//提交评论
 function  comment2target(questionId,type,content) {
     if (!content){
         alert("不能回复空内容....")
@@ -15,7 +39,7 @@ function  comment2target(questionId,type,content) {
         data:JSON.stringify({
             "parentId":questionId,
             "content":content,
-            "type": type
+            "type": type,
         }),
         success:function (response) {
             alert(response.msg);

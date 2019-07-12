@@ -8,13 +8,16 @@
         update publish set viewCount=viewCount+1 where Id=#{id}
     </update>
     <select id="select" resultMap="UserWithPublish">
-        select publish.*,user.* from publish,user where publish.creator=user.Id
+        select publish.*,user.* from publish,user where publish.creator=user.userId
     </select>
     <select id="selectByCreator" resultType="com.example.community.community.model.Publish">
         select * from publish where creator=#{id}
     </select>
     <select id="selectById" resultMap="UserWithPublish">
-        select publish.*,user.* from publish,user where publish.Id=#{id}
+        select publish.*,user.* from publish,user where publish.Id=#{id} and user.userId=publish.creator
+    </select>
+    <select id="selectByTag" resultType="com.example.community.community.model.Publish">
+        select * from publish where Id!=#{id} and tag regexp #{tag}
     </select>
     <resultMap type="com.example.community.community.model.Publish" id="UserWithPublish">
         <id property="id" column="id" />
@@ -28,7 +31,7 @@
         <result property="likeCount" column="likeCount"/>
         <result property="tag" column="tag"/>
         <association property="user" javaType="com.example.community.community.model.User">
-            <id property="id" column="id" />
+            <id property="userId" column="userId" />
             <result property="username" column="username" />
             <result property="avatarUrl" column="avatarUrl" />
         </association>

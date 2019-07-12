@@ -16,22 +16,10 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2 th:text="${sectionName}"></h2>
             <hr>
-            <div class="media" th:each="publishlist:${publishListByCreator}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-rounded" src="">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        <a th:href="@{'/question/'+${publishlist.id}}" th:text="${publishlist.title}"></a>
-                    </h4>
-                    <span th:text="${publishlist.content}"></span><br>
-                    <span class="text-desc">
-                        <span th:text="${publishlist.commentCount}"></span>个回复·
-                        <span th:text="${publishlist.viewCount}"></span>次浏览·
-                        <span th:text="${#dates.format(publishlist.gmtCreate,'yyyy-MMMM-dd')}"></span>
-                    </span>
+            <div class="media" th:each="publishlist:${nitificationList}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="#" class="text-class" th:text="${publishlist.user.username}"></a><a style="color: #0f0f0f">评论了</a><a th:href="@{'/question/'+${publishlist.id}}" th:text="${publishlist.content}"></a>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </div>
             </div>
         </div>
@@ -39,7 +27,7 @@
             <h1>热门话题</h1>
             <div class="list-group">
                 <a href="/profile/question" th:class="${section=='question'}? 'list-group-item active':'list-group-item'" >我的问题</a>
-                <a href="/profile/replies" th:class="${section=='replies'}? 'list-group-item active':'list-group-item'">最新回复<span class="badge">14</span></a>
+                <a href="/profile/replies" th:class="${section=='replies'}? 'list-group-item active':'list-group-item'">最新回复</a>
             </div>
         </div>
     </div>

@@ -1,13 +1,30 @@
 package com.example.community.community.model;
 
 public class User {
-    private int id;
+    private int userId;
     private String username;
     private String accountId;
     private String token;
     private Long gmtCreate;
     private Long gmtModified;
     private String avatarUrl;
+    private String password;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -17,13 +34,7 @@ public class User {
         this.avatarUrl = avatarUrl;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
