@@ -34,6 +34,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String,String> fileMap=new LinkedHashMap<String, String>();
         fileMap.put("/user/*","authc");
+        fileMap.put("/profile/*","authc");
         fileMap.put("/publish","perms[user:add]");
         shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         shiroFilterFactoryBean.setLoginUrl("/login");

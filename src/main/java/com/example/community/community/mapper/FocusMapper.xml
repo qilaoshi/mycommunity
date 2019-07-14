@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.community.community.mapper.FocusMapper">
+
+    <insert id="insert">
+        insert into follow (focusers, focused) values (#{focusers},#{focused})
+    </insert>
+    <delete id="delete">
+        delete from follow where focusers =#{focusers} and focused=#{focused}
+    </delete>
+    <select id="selectAll" resultType="com.example.community.community.model.Focus">
+        select * from follow where focusers =#{focusers} and focused=#{focused}
+    </select>
+</mapper>

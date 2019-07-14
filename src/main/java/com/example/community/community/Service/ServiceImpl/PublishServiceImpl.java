@@ -3,6 +3,7 @@ package com.example.community.community.Service.ServiceImpl;
 import com.example.community.community.Service.PublishService;
 import com.example.community.community.mapper.PublishMapper;
 import com.example.community.community.model.Publish;
+import com.example.community.community.model.UserWithPublish;
 import com.sun.deploy.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -25,10 +26,8 @@ public class PublishServiceImpl implements PublishService {
     }
 
     @Override
-    @Cacheable
-    public List<Publish> select() {
-        System.out.println("getpublish");
-        return publishMapper.select();
+    public List<UserWithPublish> select() {
+        return publishMapper.selectTwo();
     }
 
     @Override

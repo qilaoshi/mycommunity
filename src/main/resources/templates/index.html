@@ -16,21 +16,21 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
             <hr>
-            <div class="media" th:each="publishlist:${publishlist}">
+            <div class="media" th:each="publish:${publishlist}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${publishlist.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${publish.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a th:href="@{'/question/'+${publishlist.id}}" th:text="${publishlist.title}"></a>
+                        <a th:href="@{'/question/'+${publish.id}}" th:text="${publish.title}"></a>
                     </h4>
-                    <span th:text="${publishlist.content}"></span><br>
+                    <span th:text="${publish.content}"></span><br>
                     <span class="text-desc">
-                        <span th:text="${publishlist.commentCount}"></span>个回复·
-                        <span th:text="${publishlist.viewCount}"></span>次浏览·
-                        <span th:text="${#dates.format(publishlist.gmtCreate,'yyyy-MMMM-dd')}"></span>
+                        <span th:text="${publish.commentCount}"></span>个回复·
+                        <span th:text="${publish.viewCount}"></span>次浏览·
+                        <span th:text="${#dates.format(publish.gmtCreate,'yyyy-MMMM-dd')}"></span>
                     </span>
                 </div>
             </div>

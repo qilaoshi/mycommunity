@@ -10,6 +10,8 @@
 #day7 通过模糊查询（mysql正则）贴子查询相关内容，并在网页右侧显示 2，学习了shiro（shiro三大核心组件：subject，realm，securitymanager），实现了通过shiro进行权限管理。
 #day8 学习了解了Redis和RabbitMQ
 #day9 上午修了一上午bug，下午实现了评论后通知到相关用户，但是方法有点问题，明天继续研究改善。
+#day10 通知功能完成
+#day11 加入markdown用来编辑发布的帖子，初步实现了关注用户功能
 #资料
 System.current.TimeMillis()获取当前系统时间;
 thymeleaf格式化时间 dates.format("传过来的时间",'yyyy-MMMM-dd')

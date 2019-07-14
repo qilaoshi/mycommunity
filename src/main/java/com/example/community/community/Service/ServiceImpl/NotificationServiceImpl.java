@@ -24,7 +24,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Publish> selectAll(int id) {
-        return notificationMapper.selectAll(id);
+    public void updateStatus(int nId) {
+        notificationMapper.updateStatus(nId);
     }
+
 }

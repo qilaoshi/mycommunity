@@ -3,7 +3,7 @@ package com.example.community.community.model;
 import java.util.List;
 
 public class Notification {
-    private int id;
+    private int nId;
     private int notifier;
     private int receiver;
     private int outerId;
@@ -45,12 +45,12 @@ public class Notification {
         this.receiver = receiver;
     }
 
-    public int getId() {
-        return id;
+    public int getnId() {
+        return nId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setnId(int nId) {
+        this.nId = nId;
     }
 
 

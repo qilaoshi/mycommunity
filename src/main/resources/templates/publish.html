@@ -5,9 +5,11 @@
     <title>community</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="css/editormd.min.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
     <script src="jquery/jquery-3.3.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="js/editormd.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:replace="common/header"></div>
@@ -20,17 +22,32 @@
                     <label for="title">标题:</label>
                     <input type="text" name="title" class="form-control" id="title" placeholder="标题">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="test-editor">
                     <label for="content">内容</label>
-                    <textarea class="form-control" placeholder="内容" name="content" id="content" rows="10" cols="30"></textarea>
+                    <textarea class="form-control" placeholder="内容" name="content" id="content" rows="10"
+                              cols="30"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var editor = editormd("test-editor", {
+                            width: "100%",
+                            height: 300,
+                            path: "/js/lib/",
+                            watch: false,
+                            placeholder:"请输入",
+                            imageUpload: true,
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: "/upload",
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签，以逗号隔开">
                 </div>
                 <button type="submit" class="btn btn-success publish-button">提交</button>
                 <div th:if="${error!=null}">
-                <span class="alert alert-danger" role="alert" th:text="${error}"></span>
+                    <span class="alert alert-danger" role="alert" th:text="${error}"></span>
                 </div>
             </form>
         </div>

@@ -19,4 +19,28 @@
     <select id="selectUser" resultType="com.example.community.community.model.User">
         select * from user where username=#{username}
     </select>
+
+
+    <select id="selectNotifi" resultMap="resultById">
+       select publish.*,notification.*,user.* from notification,user,publish where notification.notifier=user.userId and notification.receiver=#{id} and publish.id=notification.outerId
+    </select>
+
+    <resultMap id="resultById" type="com.example.community.community.model.User">
+        <id property="userId" column="userId"/>
+        <result property="userId" column="outerId"/>
+        <collection property="notification" ofType="com.example.community.community.model.Notification">
+            <id property="nId" column="nId"/>
+            <result property="notifier" column="notifier"/>
+            <result property="status" column="status"/>
+            <association property="publish" javaType="com.example.community.community.model.Publish">
+                <id property="id" column="id"/>
+                <result property="content" column="content"/>
+                <association property="user" javaType="com.example.community.community.model.User">
+                    <id property="userId" column="userId"/>
+                    <result property="username" column="username"/>
+                </association>
+            </association>
+        </collection>
+    </resultMap>
+
 </mapper>

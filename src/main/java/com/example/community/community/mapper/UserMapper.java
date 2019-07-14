@@ -13,4 +13,5 @@ public interface UserMapper {
      User selectByAccountId(int accountId);
      User selectUser(String username);
      void insertToken(User user);
+     User selectNotifi(int id);
 }

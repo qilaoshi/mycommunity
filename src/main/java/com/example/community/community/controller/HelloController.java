@@ -3,8 +3,10 @@ package com.example.community.community.controller;
 import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.PublishService;
 import com.example.community.community.Service.UserService;
+import com.example.community.community.mapper.PublishMapper;
 import com.example.community.community.model.Publish;
 import com.example.community.community.model.User;
+import com.example.community.community.model.UserWithPublish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +25,14 @@ public class HelloController {
     @Autowired
     private PublishService publishService;
     @Autowired
-    private NotificationService notificationService;
+    private PublishMapper publishMapper;
 
     @GetMapping("/")
-    public String index(Model model,HttpServletRequest request) {
-        List<Publish> publishList=publishService.select();
-        User user=(User)request.getSession().getAttribute("user");
-        if (user!=null) {
-            int allCount = notificationService.allCount(user.getUserId());
-            request.getSession().setAttribute("messageCount",allCount);
-        }
-        model.addAttribute("publishlist",publishList);
+    public String index(Model model) {
+        List<UserWithPublish> publishList=publishService.select();
+        model.addAttribute("publishlist",publishMapper.selectTwo());
+        System.out.println(publishMapper.selectTwo().size()+"publish长度");
+        System.out.println(publishList.size()+"帖子");
         return "index";
     }
 
@@ -56,7 +55,6 @@ public class HelloController {
     //提交帖子
     @GetMapping("/do_publish")
     public String doPublish(Publish publish,HttpServletRequest request,Model model){
-        Cookie[] cookies = request.getCookies();
         User user =  (User)request.getSession().getAttribute("user");
         if (user==null){
             model.addAttribute("error","未登录不能发布帖子");

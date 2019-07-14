@@ -37,7 +37,9 @@ public class LoginRegisterController {
             String token = UUID.randomUUID().toString();
             user1.setToken(token);
             userService.insertToken(user1);
-            response.addCookie(new Cookie("token", token));
+            Cookie cookie=new Cookie("token",token);
+            cookie.setMaxAge(4320 * 60);
+            response.addCookie(cookie);
             return "redirect:/";
         }catch (UnknownAccountException e){
             model.addAttribute("msg","用户名不存在");

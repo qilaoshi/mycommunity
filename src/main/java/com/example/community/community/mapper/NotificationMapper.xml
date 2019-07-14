@@ -4,18 +4,12 @@
     <insert id="insert">
         insert into notification (notifier, receiver, outerId, gmtCreate) values (#{notifier},#{receiver},#{outerId},#{gmtCreate})
     </insert>
+    <update id="updateStatus">
+        update notification set status=1 where nId=#{nId}
+    </update>
     <select id="allCount" resultType="java.lang.Integer">
-        select count(*) from notification where receiver=#{receiver}
+        select count(*) from notification where receiver=#{receiver} and status=0
     </select>
-    <select id="selectAll" resultMap="notification">
-       select publish.*,notification.*,user.* from notification,user,publish where notification.notifier=user.userId and receiver=#{id} and publish.id=notification.outerId
-    </select>
-    <resultMap type="com.example.community.community.model.Publish" id="notification">
-        <id property="id" column="id"/>
-        <result property="content" column="content" />
-        <association property="user" javaType="com.example.community.community.model.User">
-            <id property="userId" column="userId"/>
-            <result property="username" column="username"/>
-        </association>
-    </resultMap>
+
+
 </mapper>

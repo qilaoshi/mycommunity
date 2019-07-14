@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/my.css">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/editormd.preview.min.css">
     <script src="/jquery/jquery-3.3.1.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/myjs.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 </head>
 <style>
 </style>
@@ -29,8 +33,17 @@
                         发布于:<span th:text="${#dates.format(onePublishList.gmtCreate,'yyyy-MMMM-dd')}"></span>
                     </span>
                     <hr>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${onePublishList.content}"></div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                        <textarea style="display:none;" th:text="${onePublishList.content}"></textarea>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            editormd.markdownToHTML("question-view", {});
+                        });
+                    </script>
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                     <a class="community-menu"
                        th:if="${session.user != null && session.user.userId ==onePublishList.creator}">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -89,7 +102,6 @@
                             </div>
                         </div>
 
-
                     </div>
                 </div>
             </div>
@@ -115,6 +127,12 @@
                         <span th:text="${onePublishList.user.username}"></span>
                     </h6>
                 </div>
+            </div>
+            <div style="margin-top: 5px" th:if="${focus==null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button id="button-focus" type="button" class="btn btn-info btn-lg" onclick="focuss(this)" th:data-id="${onePublishList.user.userId}">关注他</button>
+            </div>
+            <div style="margin-top: 5px" th:if="${focus!=null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button id="button-removeFocus" type="button" class="btn btn-default btn-lg" onclick="removeFocus(this)" th:data-id="${onePublishList.user.userId}">已关注</button>
             </div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

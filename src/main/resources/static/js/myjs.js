@@ -131,3 +131,40 @@ function f(id,type) {
         },
     });
 }
+
+
+
+function focuss(e) {
+    var focused=e.getAttribute("data-id");
+    console.log("id is"+focused);
+    $("#button-focus").val("已关注");
+    $("#button-focus").removeClass("btn-info")
+    $("#button-focus").addClass("btn-default");
+    $.ajax({
+        url:"/focus?focused="+focused,
+        success:function (data) {
+            console.log(data.msg);
+        },
+        error:function () {
+            console.log("接口异常");
+        },
+    });
+}
+
+function removeFocus(e) {
+    var focused=e.getAttribute("data-id");
+    console.log("id is"+focused);
+    $("#button-removeFocus").val("关注他");
+    $("#button-removeFocus").removeClass("btn-default")
+    $("#button-removeFocus").addClass("btn-info");
+    $.ajax({
+        url:"/remove_focus?focused="+focused,
+        success:function (data) {
+            console.log(data.msg);
+        },
+        error:function () {
+            console.log("接口异常");
+        },
+    });
+}
+

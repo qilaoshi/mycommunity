@@ -7,9 +7,7 @@
     <update id="updateViewCount">
         update publish set viewCount=viewCount+1 where Id=#{id}
     </update>
-    <select id="select" resultMap="UserWithPublish">
-        select publish.*,user.* from publish,user where publish.creator=user.userId
-    </select>
+
     <select id="selectByCreator" resultType="com.example.community.community.model.Publish">
         select * from publish where creator=#{id}
     </select>
@@ -19,6 +17,16 @@
     <select id="selectByTag" resultType="com.example.community.community.model.Publish">
         select * from publish where Id!=#{id} and tag regexp #{tag}
     </select>
+    <select id="select" resultType="com.example.community.community.model.UserWithPublish">
+        select publish.*,user.* from publish,user where publish.creator=user.userId
+    </select>
+
+
+    <select id="selectTwo" resultType="com.example.community.community.model.UserWithPublish">
+        select publish.*,user.* from publish,user where publish.creator=user.userId
+    </select>
+
+
     <resultMap type="com.example.community.community.model.Publish" id="UserWithPublish">
         <id property="id" column="id" />
         <result property="title" column="title"/>

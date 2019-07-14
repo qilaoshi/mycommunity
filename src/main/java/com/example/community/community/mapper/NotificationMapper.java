@@ -8,5 +8,5 @@ import java.util.List;
 public interface NotificationMapper {
     void insert(Notification notification);
     int allCount(int receiver);
-    List<Publish> selectAll(int id);
+    void updateStatus(int nId);
 }

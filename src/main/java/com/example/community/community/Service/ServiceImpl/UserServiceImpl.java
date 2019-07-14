@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public void insertToken(User user) {
         userMapper.insertToken(user);
     }
+
+    @Override
+    public User selectNotifi(int id) {
+        return userMapper.selectNotifi(id);
+    }
 }

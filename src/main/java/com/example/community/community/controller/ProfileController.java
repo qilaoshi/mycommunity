@@ -3,14 +3,14 @@ package com.example.community.community.controller;
 import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.PublishService;
 import com.example.community.community.Service.UserService;
+import com.example.community.community.dto.CommonJsonDto;
 import com.example.community.community.model.Notification;
 import com.example.community.community.model.Publish;
 import com.example.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +34,13 @@ public class ProfileController {
             model.addAttribute("section", "question");
             model.addAttribute("sectionName", "我的提问");
         } else if ("replies".equals(action)) {
-            List<Publish> notificationList=notificationService.selectAll(user.getUserId());
+            User notificationList=userService.selectNotifi(user.getUserId());
+            if (notificationList!=null){
             model.addAttribute("nitificationList",notificationList);
+            System.out.println("通知的id是"+notificationList.getNotification().get(0).getnId());
+            }
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "我的回复");
-            request.getSession().removeAttribute("messageCount");
         }
         if (user==null){
             return "redirect:/";
@@ -46,5 +48,12 @@ public class ProfileController {
         List<Publish> publishListByCreator=publishService.selectByCreator(3);
         model.addAttribute("publishListByCreator",publishListByCreator);
         return "profile";
+    }
+
+    @GetMapping("/updateStatus")
+    public Object updateStatus(int nId,int publishId){
+        System.out.println("来了"+nId);
+        notificationService.updateStatus(nId);
+        return "redirect:/question/"+publishId;
     }
 }

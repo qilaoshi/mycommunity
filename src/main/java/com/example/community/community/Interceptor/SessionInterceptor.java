@@ -1,5 +1,6 @@
 package com.example.community.community.Interceptor;
 
+import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.UserService;
 import com.example.community.community.model.User;
 import org.apache.catalina.security.SecurityUtil;
@@ -19,9 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("执行cookie");
+        System.out.println("执行拦截器");
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -32,6 +35,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                         Subject subject= SecurityUtils.getSubject();
                         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(user.getUsername(),user.getPassword());
                         subject.login(usernamePasswordToken);
+                        int allCount = notificationService.allCount(user.getUserId());
+                        request.getSession().setAttribute("messageCount",allCount);
                         request.getSession().setAttribute("user", user);
                     }
                     break;

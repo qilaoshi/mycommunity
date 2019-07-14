@@ -1,5 +1,7 @@
 package com.example.community.community.model;
 
+import java.util.List;
+
 public class User {
     private int userId;
     private String username;
@@ -9,6 +11,24 @@ public class User {
     private Long gmtModified;
     private String avatarUrl;
     private String password;
+    private List<Notification> notification;
+    private List<Publish> publishes;
+
+    public List<Publish> getPublishes() {
+        return publishes;
+    }
+
+    public void setPublishes(List<Publish> publishes) {
+        this.publishes = publishes;
+    }
+
+    public List<Notification> getNotification() {
+        return notification;
+    }
+
+    public void setNotification(List<Notification> notification) {
+        this.notification = notification;
+    }
 
     public int getUserId() {
         return userId;
