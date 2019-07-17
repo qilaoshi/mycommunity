@@ -13,6 +13,24 @@ public class User {
     private String password;
     private List<Notification> notification;
     private List<Publish> publishes;
+    private String exchange;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(String exchange) {
+        this.exchange = exchange;
+    }
 
     public List<Publish> getPublishes() {
         return publishes;

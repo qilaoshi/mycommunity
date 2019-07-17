@@ -2,6 +2,7 @@ package com.example.community.community.Service.ServiceImpl;
 
 import com.example.community.community.Service.UserService;
 import com.example.community.community.mapper.UserMapper;
+import com.example.community.community.model.NotifiWithUserWithPublish;
 import com.example.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectNotifi(int id) {
+    public List<NotifiWithUserWithPublish> selectNotifi(int id) {
         return userMapper.selectNotifi(id);
+    }
+
+    @Override
+    public void register(User user) {
+        userMapper.register(user);
+    }
+
+    @Override
+    public User selectByUserId(int id) {
+        return userMapper.selectByUserId(id);
     }
 }

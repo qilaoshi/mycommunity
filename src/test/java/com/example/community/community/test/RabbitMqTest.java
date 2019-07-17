@@ -6,6 +6,7 @@ import com.example.community.community.mapper.NotificationMapper;
 import com.example.community.community.mapper.UserMapper;
 import com.example.community.community.model.Notification;
 import com.example.community.community.model.User;
+import lombok.Data;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,7 +35,7 @@ public class RabbitMqTest {
     @Test
     public void sendmsg(){
         System.out.println("第二个消息");
-        rabbitTemplate.convertAndSend("user-fanout",null,"可以啊");
+        rabbitTemplate.convertAndSend("user-fanout",null,"可以ddd啊");
 
     }
     @Test
@@ -46,23 +45,21 @@ public class RabbitMqTest {
 
     @Test
     public void tests() {
-        ArrayList<Hero> arrayList = new ArrayList<>();
-        for (int i=0;i<=5;i++){
-            arrayList.add(new Hero("hero"+i));
-        }
-        Iterator<Hero> it=arrayList.iterator();
-        while (it.hasNext()){
-            Hero hero=it.next();
-            System.out.println(hero);
-        }
+
+
     }
 
 
 }
+@Data
 class  Hero{
     private String heroName;
-    public Hero(String heroName){
+    public float hp;
+    public int damage;
+    public Hero(String heroName,float hp,int dmage){
         this.heroName=heroName;
+        this.damage=dmage;
+        this.hp=hp;
     }
     public String toString(){
         return heroName;

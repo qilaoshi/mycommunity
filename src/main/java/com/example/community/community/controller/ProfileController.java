@@ -4,6 +4,7 @@ import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.PublishService;
 import com.example.community.community.Service.UserService;
 import com.example.community.community.dto.CommonJsonDto;
+import com.example.community.community.model.NotifiWithUserWithPublish;
 import com.example.community.community.model.Notification;
 import com.example.community.community.model.Publish;
 import com.example.community.community.model.User;
@@ -34,10 +35,10 @@ public class ProfileController {
             model.addAttribute("section", "question");
             model.addAttribute("sectionName", "我的提问");
         } else if ("replies".equals(action)) {
-            User notificationList=userService.selectNotifi(user.getUserId());
+            System.out.println("查看通知");
+            List<NotifiWithUserWithPublish> notificationList=userService.selectNotifi(user.getUserId());
             if (notificationList!=null){
             model.addAttribute("nitificationList",notificationList);
-            System.out.println("通知的id是"+notificationList.getNotification().get(0).getnId());
             }
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "我的回复");

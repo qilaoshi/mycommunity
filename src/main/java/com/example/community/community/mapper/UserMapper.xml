@@ -4,6 +4,9 @@
     <insert id="insert">
         insert into user (username,accountId,token,gmtCreate,gmtModified,avatarUrl) values (#{username},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})
     </insert>
+    <insert id="register">
+        insert into user (email,username,password,exchange) values (#{email},#{username},#{password},#{exchange});
+    </insert>
     <update id="insertToken">
         update user set token=#{token} where userId=#{userId}
     </update>
@@ -21,13 +24,15 @@
     </select>
 
 
-    <select id="selectNotifi" resultMap="resultById">
+    <select id="selectNotifi" resultType="com.example.community.community.model.NotifiWithUserWithPublish">
        select publish.*,notification.*,user.* from notification,user,publish where notification.notifier=user.userId and notification.receiver=#{id} and publish.id=notification.outerId
+    </select>
+    <select id="selectByUserId" resultType="com.example.community.community.model.User">
+        select * from user where userId=#{id}
     </select>
 
     <resultMap id="resultById" type="com.example.community.community.model.User">
         <id property="userId" column="userId"/>
-        <result property="userId" column="outerId"/>
         <collection property="notification" ofType="com.example.community.community.model.Notification">
             <id property="nId" column="nId"/>
             <result property="notifier" column="notifier"/>

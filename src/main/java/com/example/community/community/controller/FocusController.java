@@ -1,9 +1,13 @@
 package com.example.community.community.controller;
 
 import com.example.community.community.Service.FocusService;
+import com.example.community.community.Service.UserService;
 import com.example.community.community.dto.CommonJsonDto;
 import com.example.community.community.model.Focus;
 import com.example.community.community.model.User;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 public class FocusController {
     @Autowired
     private FocusService focusService;
-
+    @Autowired
+    private AmqpAdmin amqpAdmin;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/focus")
     @ResponseBody

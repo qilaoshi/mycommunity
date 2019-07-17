@@ -137,9 +137,9 @@ function f(id,type) {
 function focuss(e) {
     var focused=e.getAttribute("data-id");
     console.log("id is"+focused);
-    $("#button-focus").val("已关注");
-    $("#button-focus").removeClass("btn-info")
-    $("#button-focus").addClass("btn-default");
+    $("#focuss").hide();
+    $("#focus").hide();
+    $("#removeFocuss").show();
     $.ajax({
         url:"/focus?focused="+focused,
         success:function (data) {
@@ -154,9 +154,9 @@ function focuss(e) {
 function removeFocus(e) {
     var focused=e.getAttribute("data-id");
     console.log("id is"+focused);
-    $("#button-removeFocus").val("关注他");
-    $("#button-removeFocus").removeClass("btn-default")
-    $("#button-removeFocus").addClass("btn-info");
+    $("#removeFocus").hide();
+    $("#removeFocuss").hide();
+    $("#focuss").show();
     $.ajax({
         url:"/remove_focus?focused="+focused,
         success:function (data) {

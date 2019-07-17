@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; chraset=UTF-8">
+    <title>community</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/my.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+    <script src="/jquery/jquery-3.3.1.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/myjs.js" type="application/javascript"></script>
+    <script src="/js/sockjs.js" type="application/javascript"></script>
+    <script src="/js/stomp.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:replace="common/header"></div>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label for="content"></label>
+                <div style="height: 500px" class="form-control" placeholder="内容" name="content" id="content" rows="10"
+                     cols="30"><h3 id="msg"></h3></div>
+            </div>
+            <input id="id" th:value="${id}"/>
+            <input id="ids" th:value="2"/>
+            <input id="sendmsg" class="form-control" type="text"/>
+            <button class="btn btn-success publish-button" onclick="sendmsg()">fasong</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    var id = $("#id").val();
+    console.log("id is" + id);
+    var sockJs = new SockJS("http://localhost:8080/socket");
+    var stompClient = Stomp.over(sockJs);
+    stompClient.connect({}, function (data) {
+        stompClient.subscribe("/user/" + id + "/message/get", function (response) {
+            console.log(response.body);
+            $("#msg").append(response.body + "<br>")
+        })
+    })
+
+    function sendmsg() {
+        var sendid = $("#ids").val();
+        var message = $("#sendmsg").val();
+        stompClient.send("/message", {}, JSON.stringify({
+            msg: message,
+            toUser: sendid,
+            fromUser: id
+        }));
+    }
+</script>
+</html>

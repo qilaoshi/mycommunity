@@ -7,6 +7,8 @@ import com.example.community.community.mapper.PublishMapper;
 import com.example.community.community.model.Publish;
 import com.example.community.community.model.User;
 import com.example.community.community.model.UserWithPublish;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,8 @@ public class HelloController {
     private PublishService publishService;
     @Autowired
     private PublishMapper publishMapper;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -76,6 +80,7 @@ public class HelloController {
         publish.setGmtModified(publish.getGmtCreate());
         publish.setCreator(user.getUserId());
         publishService.insert(publish);
+        rabbitTemplate.convertAndSend(user.getEmail()+"exchange",null,"你关注的"+user.getUsername()+"发布了"+publish.getTitle());
         return "redirect:/";
     }
 

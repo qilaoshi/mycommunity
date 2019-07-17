@@ -128,12 +128,25 @@
                     </h6>
                 </div>
             </div>
-            <div style="margin-top: 5px" th:if="${focus==null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <!--关注 -->
+            <div th:if="${session.user.userId!=onePublishList.user.userId}">
+            <div id="focus" style="margin-top: 5px" th:if="${focus==null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <button id="button-focus" type="button" class="btn btn-info btn-lg" onclick="focuss(this)" th:data-id="${onePublishList.user.userId}">关注他</button>
             </div>
-            <div style="margin-top: 5px" th:if="${focus!=null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="removeFocus" style="margin-top: 5px" th:if="${focus!=null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <button id="button-removeFocus" type="button" class="btn btn-default btn-lg" onclick="removeFocus(this)" th:data-id="${onePublishList.user.userId}">已关注</button>
             </div>
+
+            <div id="focuss" style="margin-top: 5px;display: none"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button  type="button" class="btn btn-info btn-lg" onclick="focuss(this)" th:data-id="${onePublishList.user.userId}">关注他</button>
+            </div>
+            <div id="removeFocuss" style="margin-top: 5px;display: none"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button  type="button" class="btn btn-default btn-lg" onclick="removeFocus(this)" th:data-id="${onePublishList.user.userId}">已关注</button>
+            </div>
+            </div>
+
+
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h3>相关内容</h3>

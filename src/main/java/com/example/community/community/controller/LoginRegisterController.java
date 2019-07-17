@@ -6,6 +6,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +23,23 @@ import java.util.UUID;
 public class LoginRegisterController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AmqpAdmin amqpAdmin;
 
     @GetMapping("/login")
     public String toLogin(){
         return "login";
+    }
+    @GetMapping("/register")
+    public String toRegister(){
+        return "register";
+    }
+
+    @PostMapping("/do_register")
+    public String doRegister(User user,Model model){
+        amqpAdmin.declareExchange(new FanoutExchange(user.getEmail()+"exchange"));
+        userService.register(user);
+        return "redirect:/";
     }
 
     @PostMapping("/do_login")

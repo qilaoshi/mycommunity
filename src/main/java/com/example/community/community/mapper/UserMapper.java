@@ -1,5 +1,6 @@
 package com.example.community.community.mapper;
 
+import com.example.community.community.model.NotifiWithUserWithPublish;
 import com.example.community.community.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +14,7 @@ public interface UserMapper {
      User selectByAccountId(int accountId);
      User selectUser(String username);
      void insertToken(User user);
-     User selectNotifi(int id);
+     List<NotifiWithUserWithPublish> selectNotifi(int id);
+     void register(User user);
+     User selectByUserId(int id);
 }

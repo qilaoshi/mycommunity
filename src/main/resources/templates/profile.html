@@ -18,10 +18,10 @@
             <h2 th:text="${sectionName}"></h2>
             <hr>
             <div th:if="${nitificationList!=null}">
-                <div class="media" th:each="publishlist:${nitificationList.notification}">
+                <div class="media" th:each="publishlist:${nitificationList}">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="#" class="text-class" th:text="${publishlist.publish.user.username}"></a>
-                        <a style="color: #0f0f0f">评论了</a><a  th:href="@{'/updateStatus?nId='+${publishlist.nId}+'&&publishId='+${publishlist.publish.id}}"  th:text="${publishlist.publish.content}"></a>
+                        <a href="#" class="text-class" th:text="${publishlist.username}"></a>
+                        <a style="color: #0f0f0f">评论了</a><a  th:href="@{'/updateStatus?nId='+${publishlist.nId}+'&&publishId='+${publishlist.id}}"  th:text="${publishlist.title}"></a>
                         <span class="label label-danger" th:if="${publishlist.status==0}">未读</span>
                         <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     </div>
