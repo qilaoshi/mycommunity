@@ -55,4 +55,29 @@ public class PublishServiceImpl implements PublishService {
         publish1.setTag(regexpTag);
         return publishMapper.selectByTag(publish1);
     }
+
+    @Override
+    public List<UserWithPublish> selectByName(String name) {
+        return publishMapper.selectByName(name);
+    }
+
+    @Override
+    public List<UserWithPublish> selectByUserId(int id) {
+        return publishMapper.selectByUserId(id);
+    }
+
+    @Override
+    public List<UserWithPublish> category(String name) {
+        return publishMapper.category(name);
+    }
+
+    @Override
+    public List<UserWithPublish> selectByHot() {
+        return publishMapper.selectByHot();
+    }
+
+    @Override
+    public List<UserWithPublish> selectBytTime() {
+        return publishMapper.selectBytTime();
+    }
 }

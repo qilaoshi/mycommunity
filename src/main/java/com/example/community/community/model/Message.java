@@ -5,6 +5,11 @@ import lombok.Data;
 @Data
 public class Message {
     private String msg;
-    private String toUser;
-    private String fromUser;
+    private int toUser;
+    private int fromUser;
+    private String fromUsername;
+    private String toUsername;
+    private String time;
+    private String fromHeadPicture;
+    private String toHeadPicture;
 }

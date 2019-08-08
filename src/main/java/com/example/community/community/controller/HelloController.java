@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,9 +37,20 @@ public class HelloController {
     @GetMapping("/")
     public String index(Model model) {
         List<UserWithPublish> publishList=publishService.select();
-        model.addAttribute("publishlist",publishMapper.selectTwo());
-        System.out.println(publishMapper.selectTwo().size()+"publish长度");
-        System.out.println(publishList.size()+"帖子");
+        List<UserWithPublish> hotList=new ArrayList<>();
+        if (publishList.size()>=5){
+          for (int i=0;i<5;i++){
+            hotList.add(publishService.selectByHot().get(i));
+        }
+        }else {
+            for (int i=0;i<publishList.size();i++){
+                hotList.add(publishService.selectByHot().get(i));
+            }
+        }
+            model.addAttribute("hotList", hotList);
+            model.addAttribute("publishlist", publishMapper.selectTwo());
+            System.out.println(publishMapper.selectTwo().size() + "publish长度");
+            System.out.println(publishList.size() + "帖子");
         return "index";
     }
 
@@ -80,7 +94,7 @@ public class HelloController {
         publish.setGmtModified(publish.getGmtCreate());
         publish.setCreator(user.getUserId());
         publishService.insert(publish);
-        rabbitTemplate.convertAndSend(user.getEmail()+"exchange",null,"你关注的"+user.getUsername()+"发布了"+publish.getTitle());
+       //rabbitTemplate.convertAndSend(user.getEmail()+"exchange",null,"你关注的"+user.getUsername()+"发布了"+publish.getTitle());
         return "redirect:/";
     }
 

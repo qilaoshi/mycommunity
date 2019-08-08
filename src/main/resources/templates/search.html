@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; chraset=UTF-8">
+    <title>community</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+    <script src="jquery/jquery-3.3.1.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="js/sockjs.js" type="application/javascript"></script>
+    <script src="js/stomp.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:replace="common/header"></div>
+<div style="margin-left: 50px;margin-top: 20px" class="main container-fluid">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 搜索结果</h3>
+            <hr>
+            <div class="media" th:each="publish:${searchList}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${publish.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${publish.id}}" th:text="${publish.title}"></a>
+                    </h4>
+                    <span th:text="${publish.content}"></span><br>
+                    <span class="text-desc">
+                        <span th:text="${publish.commentCount}"></span>个回复·
+                        <span th:text="${publish.viewCount}"></span>次浏览·
+                        <span th:text="${#dates.format(publish.gmtCreate,'yyyy-MMMM-dd')}"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div  class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h1>热门话题</h1>
+        </div>
+        <div th:if="${session.user!=null}">
+            <input id="userId" type="hidden" th:value="${session.user.userId}"/>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    console.log("user id"+[[${session.user}]]);
+    console.log([[${session.user}]]!==null);
+    if([[${session.user}]]==null){
+        console.log("null");
+    }
+    else{
+        var userId=$("#userId").val();
+        var sockJs = new SockJS("http://localhost:8080/socket");
+        var stompClient = Stomp.over(sockJs);
+        stompClient.connect({}, function (data) {
+            stompClient.subscribe("/user/"+userId+"/server/sendMessageByServer", function (response) {
+                $("#letter").html(response.body);
+                console.log("reponse is"+response.body);
+            });
+        });
+    }
+</script>
+</html>

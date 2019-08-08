@@ -15,6 +15,15 @@ public class User {
     private List<Publish> publishes;
     private String exchange;
     private String email;
+    private String numbers;
+
+    public String getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(String numbers) {
+        this.numbers = numbers;
+    }
 
     public String getEmail() {
         return email;

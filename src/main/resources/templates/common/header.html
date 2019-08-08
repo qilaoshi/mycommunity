@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default" xmlns:th="http://www.thymeleaf.org">
-    <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid" style="background: white">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -8,29 +8,36 @@
             <a class="navbar-brand" href="/">LQ 社区</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
+            <form action="/search" class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索">
+                    <input type="text" name="name" class="form-control" placeholder="搜索">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default">搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" th:if="${session.user!=null}">
                     <a href="/publish" class="dropdown-toggle">发布</a>
                 </li>
-                <li th:if="${session.user!=null}"><a href="/profile/replies" >通知<span class="badge" th:text="${session.messageCount}"></span></a></li>
+                <li class="nav dropdown" th:if="${session.user!=null}"><a href="/profile/myletter" class="dropdown-toggle">私信<span class="badge" id="letter" style="background: #dc3545" th:text="${session.notReadLetter}"></span></a></li>
+                <li th:if="${session.user!=null}"><a href="/profile/replies" >通知<span class="badge" style="background: #dc3545" th:text="${session.messageCount}"></span></a></li>
                 <li class="dropdown" th:if="${session.user!=null}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getUsername()}"><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.username}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile/question">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
+                        <li><a href="/profile/question">个人中心</a></li>
                         <li><a href="/logout">退出登录</a></li>
                     </ul>
                 </li>
                 <li th:if="${session.user==null}">
                     <a href="/login">登录</a>
                 </li>
+                <li th:if="${session.user==null}">
+                    <a href="/register">注册</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+<div style="margin-top: 70px"></div>
+<script>
+
+</script>

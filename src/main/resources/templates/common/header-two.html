@@ -1,0 +1,31 @@
+<ul style="margin-left: 116px" class="nav nav-pills" xmlns:th="http://www.thymeleaf.org">
+    <li id="首页" role="presentation"><a href="/">首页</a></li>
+    <li id="it互联网" role="presentation"><a href="/category_search?name=it互联网">it互联网</a></li>
+    <li id="电子竞技" role="presentation" ><a href="/category_search?name=电子竞技">电子竞技</a></li>
+    <li id="娱乐时尚" role="presentation"><a href="/category_search?name=娱乐时尚">娱乐时尚</a></li>
+    <li id="体育" role="presentation"><a href="/category_search?name=体育">体育</a></li>
+    <li id="科技前沿" role="presentation"><a href="/category_search?name=科技前沿">科技前沿</a></li>
+    <li id="教育文化" role="presentation"><a href="/category_search?name=教育文化">教育文化</a></li>
+    <li id="音乐" role="presentation"><a href="/category_search?name=音乐">音乐</a></li>
+</ul>
+<script>
+    var id;
+    var href = location.href;
+    if (href.lastIndexOf("=")==-1){
+        $("#首页").addClass("active");
+    }
+    else {
+        id = decodeURIComponent(href.substring(href.lastIndexOf("=") + 1, href.length));
+
+        console.log("id is " + id);
+        var ids = ["首页", "it互联网", "电子竞技", "娱乐时尚", "体育", "科技前沿", "教育文化", "音乐"];
+        for (var i = 0; i < ids.length; i++) {
+            if (id == ids[i]) {
+                $("#" + id).addClass("active");
+            } else {
+                $("#" + ids[i]).removeClass("active");
+            }
+        }
+    }
+
+</script>

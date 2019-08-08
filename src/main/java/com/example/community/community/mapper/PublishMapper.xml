@@ -23,7 +23,22 @@
 
 
     <select id="selectTwo" resultType="com.example.community.community.model.UserWithPublish">
-        select publish.*,user.* from publish,user where publish.creator=user.userId
+        select publish.*,user.* from publish,user where publish.creator=user.userId order by publish.gmtCreate desc
+    </select>
+    <select id="selectByName" resultType="com.example.community.community.model.UserWithPublish">
+        select user.*,publish.* from publish,user where  publish.creator=user.userId and publish.title regexp #{name}
+    </select>
+    <select id="selectByUserId" resultType="com.example.community.community.model.UserWithPublish">
+        select user.*,publish.* from publish,user where  publish.creator=user.userId and publish.creator=#{id}
+    </select>
+    <select id="category" resultType="com.example.community.community.model.UserWithPublish">
+        select user.*,publish.* from publish,user where  publish.creator=user.userId and publish.tag regexp #{name}
+    </select>
+    <select id="selectByHot" resultType="com.example.community.community.model.UserWithPublish">
+        select user.*,publish.* from publish,user where  publish.creator=user.userId order by viewCount  desc
+    </select>
+    <select id="selectBytTime" resultType="com.example.community.community.model.UserWithPublish">
+        select publish.*,user.* from publish,user  where publish.creator=user.userId order by publish.gmtCreate desc
     </select>
 
 

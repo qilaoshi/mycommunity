@@ -18,7 +18,6 @@ function notification(receiver,outerId) {
             "outerId":outerId,
         }),
         success:function (data) {
-            alert("通知一手")
         },
         error:function () {
             alert("通知接口异常");
@@ -28,28 +27,28 @@ function notification(receiver,outerId) {
 
 //提交评论
 function  comment2target(questionId,type,content) {
-    if (!content){
+    if (!content) {
         alert("不能回复空内容....")
         return;
-    }
+    }else{
     $.ajax({
-        type:"POST",
-        url:"/comment",
+        type: "POST",
+        url: "/comment",
         contentType: 'application/json',
-        data:JSON.stringify({
-            "parentId":questionId,
-            "content":content,
+        data: JSON.stringify({
+            "parentId": questionId,
+            "content": content,
             "type": type,
         }),
-        success:function (response) {
-            alert(response.msg);
+        success: function (response) {
             window.location.reload();
         },
-        error:function(){
-          alert("接口异常")
+        error: function () {
+            alert("接口异常")
         },
-        dataType:"json"
+        dataType: "json"
     });
+}
 }
 
 //二级评论
@@ -77,8 +76,15 @@ function collapseComments(e){
 function comment(e) {
     var parentId=e.getAttribute("data-id");
     var content=$("#input-"+parentId).val();
+    var recevier=e.getAttribute("data-commentator");
+    var outerId=e.getAttribute("data-parentId");
+    console.log(recevier+"分别是"+outerId);
+    notification(recevier,outerId);
     comment2target(parentId,2,content);
 }
+//二级评论通知
+
+
 
 function f(id,type) {
     $.ajax({
@@ -166,5 +172,16 @@ function removeFocus(e) {
             console.log("接口异常");
         },
     });
+}
+
+function tags(e) {
+    var previous=$("#tag").val();
+    if (previous.indexOf(e)==-1){
+        if (previous){
+            $("#tag").val(previous+","+e);
+        } else {
+            $("#tag").val(e);
+        }
+    } 
 }
 

@@ -13,6 +13,18 @@
     <update id="update">
         update user set token=#{token},username=#{username},gmtModified=#{gmtModified},avatarUrl=#{avatarUrl} where accountId=#{accountId}
     </update>
+    <update id="updateEmail">
+        update user set email=#{email} where userId=#{id}
+    </update>
+    <update id="updatePassword">
+        update user set password=#{password} where userId=#{id}
+    </update>
+    <update id="updateName">
+        update user set username=#{name} where userId=#{id}
+    </update>
+    <update id="updateAvatarUrl">
+        update user set avatarUrl=#{avatarUrl} where userId=#{userId}
+    </update>
     <select id="select" resultType="com.example.community.community.model.User">
         select * from user where token=#{token}
     </select>

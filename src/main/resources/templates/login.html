@@ -11,25 +11,181 @@
 </head>
 <body>
 <div th:replace="common/header"></div>
-<div class="login-div col-lg-4 col-md-12 col-sm-12 col-xs-12">
-    <h3>登录</h3>
-    <form method="post" action="/do_login" class="form-inline">
-        <div class="form-group">
-            <p class="form-control-static">用户:</p>
-        </div>
-        <div class="form-group">
-            <label for="username" class="sr-only">Password</label>
-            <input type="username" name="username" class="form-control" id="username" placeholder="邮箱">
-        </div><br><br>
-        <div class="form-group">
-            <p class="form-control-static"> 密码:</p>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="密码">
-        </div><br>
-        <button type="submit" class="btn btn-success">登录</button>
-    </form>
+<div style="box-shadow:0px 0px  10px 5px #aaa;" class="login-div col-lg-4 col-md-12 col-sm-12 col-xs-12">
+    <ul class="nav nav-tabs nav-justified">
+        <li id="login" role="presentation" class="active"><a href="#">登录</a>
+        <li id="register" role="presentation"><a href="#">注册</a></li>
+    </ul>
+    <div id="logins" style="text-align: center;margin-top: 20px">
+        <form method="post" action="/do_login" class="form-inline" onsubmit="return doLogin();">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <a id="msgs" style="color: red"></a>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${msg}"></div>
+            <div class="form-group">
+                <p class="form-control-static">用户:</p>
+            </div>
+            <div class="form-group">
+                <label for="username" class="sr-only">Password</label>
+                <input type="username" name="username" class="form-control" id="username" placeholder="用户名">
+            </div>
+            <br><br>
+            <div class="form-group">
+                <p class="form-control-static"> 密码:</p>
+            </div>
+            <div class="form-group">
+                <label for="inputPasswords" class="sr-only">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPasswords" placeholder="密码">
+            </div>
+            <br>
+            <button style="margin-top: 20px" id="do-login" type="submit" class="mybtn btn btn-success">登录</button>
+        </form>
+    </div>
+
+        <!-- 注册-->
+    <div id="registers" style="text-align: center;margin-top: 20px">
+        <form id="register-form" method="post"  class="form-inline" onsubmit="return doRegister();">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a id="msg" style="color: red"></a>
+            </div>
+            <div style="margin-left: 0px;margin-right: 94px">
+            <div class="form-group">
+                <p  class="form-control-static">名字:</p>
+            </div>
+            <div class="form-group">
+                <label for="username" class="sr-only">Password</label>
+                <input type="username" name="username" class="form-control" id="usernames" placeholder="名字">
+            </div><br><br>
+            </div>
+            <div style="margin-left: 10px" class="form-group">
+                <p  class="form-control-static">邮箱:</p>
+            </div>
+            <div class="form-group">
+                <label for="emails" class="sr-only">Password</label>
+                <input type="email" name="email" class="form-control" id="emails" placeholder="邮箱">
+                <button id="buttonsss" type="button" class="btn btn-success" onclick="run()">发送验证码</button >
+            </div><br><br>
+            <div style="margin-left: 0px;margin-right: 100px">
+            <div class="form-group">
+                <p  class="form-control-static">验证码:</p>
+            </div>
+            <div class="form-group">
+                <label for="numbers" class="sr-only">Password</label>
+                <input type="text" name="numbers" class="form-control" id="numbers" placeholder="验证码">
+            </div><br><br>
+            </div>
+            <div style="margin-left: 7px;margin-right: 94px">
+            <div class="form-group">
+                <p class="form-control-static"> 密码:</p>
+            </div>
+            <div class="form-group">
+                <label for="inputPasswords" class="sr-only">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPasswordss" placeholder="密码">
+            </div><br>
+            </div>
+            <button style="margin-top: 20px" type="submit" class="mybtn btn btn-success">注册</button>
+        </form>
+    </div>
 </div>
 </body>
+<script>
+
+    var btn = document.getElementById('buttonsss');
+    function run(){
+        var email=$("#emails").val();
+        $.ajax({
+            url:"/sendMail?email="+email,
+            success:function (msg) {
+                alert(msg.msg)
+            },
+            error:function () {
+                alert("接口异常");
+            }
+        })
+        var time = 60;//定义时间变量。用于倒计时用
+        var timer = null;//定义一个定时器；
+        timer = setInterval(function(){///开启定时器。函数内执行
+            btn.disabled = true;
+            btn.innerText = time+"秒后重新发送";    //点击发生后，按钮的文本内容变成之前定义好的时间值。
+            time--;//时间值自减
+            if(time ==0){     //判断,当时间值小于等于0的时候
+                btn.innerText='重新发送验证码'; //其文本内容变成……点击重新发送……
+                btn.disabled = false;
+                clearInterval(timer); //清除定时器
+            }
+        },1000)
+
+    }
+
+
+    $("#registers").hide();
+    $("#register").click(function () {
+        $("#registers").show();
+        $("#logins").hide();
+        $("#login").removeClass("active");
+        $("#register").addClass("active");
+    })
+    $("#login").click(function () {
+        $("#registers").hide();
+        $("#logins").show();
+        $("#register").removeClass("active");
+        $("#login").addClass("active");
+    })
+
+    function doRegister() {
+        if ($("input[id='numbers']").val()==""){
+            $("#msg").html("请输入验证码");
+            return false;
+        }
+        if ($("input[id='usernames']").val()==""){
+            $("#msg").html("请输入用户名");
+            return false;
+        }
+        if ( $("input[id='emails']").val()==""){
+            $("#msg").html("请输入邮箱");
+            return false;
+        }
+        if ( $("input[id='inputPasswordss']").val()==""){
+            $("#msg").html("请输入密码邮箱");
+            return false;
+        }
+
+        $.ajax({
+            type:"POST",
+            url:"/do_register",
+            dataType:"json",
+            contentType: 'application/json',
+            data:JSON.stringify({
+                "username": $("input[id='usernames']").val(),
+                "email": $("input[id='emails']").val(),
+                "password": $("input[id='inputPasswordss']").val(),
+                "numbers" : $("input[id='numbers']").val(),
+            }),
+            success:function(data){
+                if(data.code==0) {
+                    alert(data.msg);
+                    window.location.reload();
+                }
+                else {
+                    $("#msg").html(data.msg);
+                }
+            },
+            error: function(){
+              alert("接口异常")
+            },
+        })
+        return false;
+    }
+   function doLogin(){
+        if($("input[id='username']").val()==""){
+            $("#msgs").html("请输入用户名");
+            return false;
+        }
+        if($("input[id='inputPasswords']").val()==""){
+            $("#msgs").html("请输入密码");
+            return false;
+        }
+        return true;
+    }
+</script>
 </html>

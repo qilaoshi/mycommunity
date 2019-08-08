@@ -31,8 +31,7 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("执行认证逻辑");
         UsernamePasswordToken usernamePasswordToken=(UsernamePasswordToken)arg0;
         User user=userService.selectUser(usernamePasswordToken.getUsername());
-        System.out.println(user.getUsername()+user.getPassword());
-        if (!usernamePasswordToken.getUsername().equals(user.getUsername())){
+        if (user==null||!usernamePasswordToken.getUsername().equals(user.getUsername())){
             System.out.println("执行验证用户名前");
             return null;
         }

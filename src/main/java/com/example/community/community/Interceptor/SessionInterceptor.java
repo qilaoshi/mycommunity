@@ -1,5 +1,6 @@
 package com.example.community.community.Interceptor;
 
+import com.example.community.community.Service.LetterService;
 import com.example.community.community.Service.NotificationService;
 import com.example.community.community.Service.UserService;
 import com.example.community.community.model.User;
@@ -22,6 +23,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     private UserService userService;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private LetterService letterService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("执行拦截器");
@@ -36,6 +39,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(user.getUsername(),user.getPassword());
                         subject.login(usernamePasswordToken);
                         int allCount = notificationService.allCount(user.getUserId());
+                        int notReadLetter=letterService.notReadCount(user.getUserId());
+                        request.getSession().setAttribute("notReadLetter",notReadLetter);
                         request.getSession().setAttribute("messageCount",allCount);
                         request.getSession().setAttribute("user", user);
                     }

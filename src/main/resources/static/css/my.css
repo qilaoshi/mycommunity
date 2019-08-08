@@ -1,10 +1,8 @@
 body {
     background-color: #efefef;
 }
-
-.main {
-    background-color: white;
-    margin: 30px;
+.main{
+    background: white;
 }
 
 .btn-publish {
@@ -112,8 +110,20 @@ body {
     padding: 40px;
     background-color: white;
     border-color: white;
+    box-shadow:0px 0px  10px 5px #aaa;
 }
 .text-class{
     font-size: x-large;
 }
 
+.chat-div{
+    margin-left: 200px !important;
+    margin-right: 300px !important;
+}
+.float-right{
+    float: right;
+}
+.mybtn{
+    margin-top: 20px;
+    float: right;
+}

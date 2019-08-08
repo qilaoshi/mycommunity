@@ -37,7 +37,7 @@
                             placeholder:"请输入",
                             imageUpload: true,
                             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                            imageUploadURL: "/upload",
+                            imageUploadURL: "/file/upload",
                         });
                     });
                 </script>
@@ -45,7 +45,39 @@
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签，以逗号隔开">
                 </div>
-                <button type="submit" class="btn btn-success publish-button">提交</button>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('it互联网')" class="label label-info">it互联网</span>
+                            </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('电子竞技')" class="label label-info">电子竞技</span>
+                    </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('娱乐时尚')"  class="label label-info">娱乐时尚</span>
+                    </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('体育')" class="label label-info">体育</span>
+                    </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('科技前沿')"  class="label label-info">科技前沿</span>
+                    </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('教育文化')"  class="label label-info">教育文化</span>
+                    </span></a>
+                    <a href="#" ><span class="label label-info tag-left">
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span onclick="tags('音乐')" class="label label-info">音乐</span>
+                    </span></a>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button style="float: right" type="submit" class="btn btn-success publish-button">提交</button>
+                </div>
                 <div th:if="${error!=null}">
                     <span class="alert alert-danger" role="alert" th:text="${error}"></span>
                 </div>
@@ -59,4 +91,16 @@
     </div>
 </div>
 </body>
+<script>
+    function tags(e) {
+        var previous=$("#tag").val();
+        if (previous.indexOf(e)==-1){
+            if (previous){
+                $("#tag").val(previous+","+e);
+            } else {
+                $("#tag").val(e);
+            }
+        }
+    }
+</script>
 </html>

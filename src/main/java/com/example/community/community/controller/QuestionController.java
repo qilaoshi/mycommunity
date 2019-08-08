@@ -35,15 +35,17 @@ public class QuestionController {
         int commentCount=commentService.commentCount(publishId);
         publishService.updatViewCount(list.get(0).getId());
         List<Publish> tagList=publishService.selectByTag(list.get(0));
-        Focus focuss=new Focus();
-        focuss.setFocusers(user.getUserId());
-        focuss.setFocused(list.get(0).getUser().getUserId());
-        Focus focus=focusService.selectAll(focuss);
+        if (user!=null) {
+            Focus focuss = new Focus();
+            focuss.setFocusers(user.getUserId());
+            focuss.setFocused(list.get(0).getUser().getUserId());
+            Focus focus = focusService.selectAll(focuss);
+            model.addAttribute("focus",focus);
+        }
         model.addAttribute("onePublishList",list.get(0));
         model.addAttribute("commentList",commentList);
         model.addAttribute("commentCount",commentCount);
         model.addAttribute("tagList",tagList);
-        model.addAttribute("focus",focus);
         return "question";
     }
 }

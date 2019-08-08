@@ -30,7 +30,7 @@
                     <span class="text-desc">
                         作者:<span th:text="${onePublishList.user.username}"></span>  |
                         浏览数:<span th:text="${onePublishList.viewCount}"></span>  |
-                        发布于:<span th:text="${#dates.format(onePublishList.gmtCreate,'yyyy-MMMM-dd')}"></span>
+                        发布于:<span th:text="${#dates.format(onePublishList.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></span>
                     </span>
                     <hr>
 
@@ -42,16 +42,8 @@
                             editormd.markdownToHTML("question-view", {});
                         });
                     </script>
-                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <hr style="margin-top: 2px;margin-bottom: 5px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                    <a class="community-menu"
-                       th:if="${session.user != null && session.user.userId ==onePublishList.creator}">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        编辑
-                    </a>
-
-                    <!--标签 -->
-                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <span class="label label-info tag-left" th:each="tag:${onePublishList.tag.split(',')}">
                                 <span class="glyphicon glyphicon-tags"></span>
@@ -61,7 +53,7 @@
 
                 </div>
             </div>
-            <hr>
+            <hr style="margin-top: 2px;margin-bottom: 5px;">
 
             <!--            回复-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -96,7 +88,7 @@
                                     <input type="text" class="form-control" placeholder="来评论一下吧....."
                                            th:id="${'input-'+comment.id}">
                                     <button type="button" class="btn btn-success pull-right" onclick="comment(this)"
-                                            th:data-id="${comment.id}">评论
+                                          th:data-parentId="${onePublishList.id}" th:data-commentator="${comment.commentator}" th:data-id="${comment.id}">评论
                                     </button>
                                 </div>
                             </div>
@@ -130,20 +122,23 @@
             </div>
 
             <!--关注 -->
-            <div th:if="${session.user.userId!=onePublishList.user.userId}">
-            <div id="focus" style="margin-top: 5px" th:if="${focus==null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div th:if="${session.user!=null&&session.user.userId!=onePublishList.user.userId}">
+            <div id="focus" style="margin-top: 5px" th:if="${focus==null}" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <button id="button-focus" type="button" class="btn btn-info btn-lg" onclick="focuss(this)" th:data-id="${onePublishList.user.userId}">关注他</button>
             </div>
-            <div id="removeFocus" style="margin-top: 5px" th:if="${focus!=null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="removeFocus" style="margin-top: 5px" th:if="${focus!=null}" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <button id="button-removeFocus" type="button" class="btn btn-default btn-lg" onclick="removeFocus(this)" th:data-id="${onePublishList.user.userId}">已关注</button>
             </div>
 
-            <div id="focuss" style="margin-top: 5px;display: none"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="focuss" style="margin-top: 5px;display: none"  class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <button  type="button" class="btn btn-info btn-lg" onclick="focuss(this)" th:data-id="${onePublishList.user.userId}">关注他</button>
             </div>
-            <div id="removeFocuss" style="margin-top: 5px;display: none"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="removeFocuss" style="margin-top: 5px;display: none"  class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <button  type="button" class="btn btn-default btn-lg" onclick="removeFocus(this)" th:data-id="${onePublishList.user.userId}">已关注</button>
             </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <button  type="button" class="btn btn-danger btn-lg" ><a th:href="@{'/user/'+${onePublishList.user.userId}}">私信</a></button>
+                </div>
             </div>
 
 

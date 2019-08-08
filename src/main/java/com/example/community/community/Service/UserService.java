@@ -15,4 +15,8 @@ public interface UserService {
     List<NotifiWithUserWithPublish> selectNotifi(int id);
     void register(User user);
     User selectByUserId(int id);
+    void updateEmail(String email,int id);
+    void updatePassword(String password,int id);
+    void updateName(String name,int id);
+    void updateAvatarUrl(User user);
 }

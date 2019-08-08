@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.community.community.mapper.LetterMapper">
+    <insert id="insert">
+        insert into letter (fromUserId, toUserId) values (#{fromUserId},#{toUserId})
+    </insert>
+    <update id="updateType">
+        update letter set type=1 where fromUserId=#{fromUserId} and toUserId=#{toUserId}
+    </update>
+    <select id="select" resultType="com.example.community.community.model.LetterWithUser">
+        select user.*,letter.* from letter,user where fromUserId=#{fromUserId} and toUserId=#{toUserId} and letter.fromUserId=user.userId and letter.type=0
+    </select>
+    <select id="selectByUserId" resultType="com.example.community.community.model.LetterWithUser">
+        select user.*,letter.* from letter,user where toUserId=#{id} and letter.fromUserId=user.userId
+    </select>
+    <select id="notReadCount" resultType="java.lang.Integer">
+         select count(*) from letter where toUserId=#{id} and type=0;
+    </select>
+</mapper>

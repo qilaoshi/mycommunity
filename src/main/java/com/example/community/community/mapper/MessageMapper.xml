@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.community.community.mapper.MessageMapper">
+    <insert id="insertMessage">
+        insert into message (msg, toUser, fromUser, fromUsername, toUsername,time, fromHeadPicture, toHeadPicture)
+                      values (#{msg},#{toUser},#{fromUser},#{fromUsername},#{toUsername},#{time},#{fromHeadPicture},#{toHeadPicture})
+    </insert>
+    <select id="selectByUser" resultType="com.example.community.community.model.Message">
+        select * from message where (fromUser=#{fromUser} and toUser=#{toUser} or fromUser=#{toUser} and toUser=#{fromUser})
+    </select>
+</mapper>

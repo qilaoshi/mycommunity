@@ -12,46 +12,79 @@
     <script src="/js/sockjs.js" type="application/javascript"></script>
     <script src="/js/stomp.js" type="application/javascript"></script>
 </head>
+<style>
+    #div1, #div2{
+        display: inline-block;
+    }
+    #div2{
+        margin-left: 10px;
+    }
+</style>
 <body>
 <div th:replace="common/header"></div>
 
-<div class="container-fluid main">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <div class="form-group">
                 <label for="content"></label>
-                <div style="height: 500px" class="form-control" placeholder="内容" name="content" id="content" rows="10"
-                     cols="30"><h3 id="msg"></h3></div>
+                <div style="overflow: scroll;height: 350px" class="form-control" placeholder="内容" name="content"
+                     id="content" rows="10"
+                     cols="30">
+                    <div id="msg">
+                        <div th:if="${messageList!=null}">
+                          <div th:each="data:${messageList}">
+                          <div id="div1"><img style='height: 20px;width: 20px' th:src="${data.fromHeadPicture}" /></div><div id="div2"><h4 th:text="${data.fromUsername}"></h4></div>
+                          <div style="width: 200px;margin-bottom: 2px;" class="alert alert-info" role="alert" th:text="${data.msg}"></div>
+                          <p style="font-size: x-small" th:text="${data.time}"></p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <input id="id" th:value="${id}"/>
-            <input id="ids" th:value="2"/>
-            <input id="sendmsg" class="form-control" type="text"/>
-            <button class="btn btn-success publish-button" onclick="sendmsg()">fasong</button>
+            <textarea class="form-control comment" rows="5" id="sendmsg"></textarea>
+            <button style="margin-top: 10px;float: right;" class="btn btn-success publish-button" onclick="sendmsgs()">
+                发送
+            </button>
         </div>
     </div>
 </div>
-
-
+</div>
 </body>
-<script>
-    var id = $("#id").val();
-    console.log("id is" + id);
+<script th:inline="javascript">
+    var fromUserId = [[${fromUser.userId}]];
+    var fromUsername = [[${fromUser.username}]];
+    var fromUserPicture = [[${fromUser.avatarUrl}]];
+    var toUserId = [[${toUser.userId}]];
+    var toUsername = [[${toUser.username}]];
+    var toUserPicture = [[${toUser.avatarUrl}]];
     var sockJs = new SockJS("http://localhost:8080/socket");
     var stompClient = Stomp.over(sockJs);
     stompClient.connect({}, function (data) {
-        stompClient.subscribe("/user/" + id + "/message/get", function (response) {
-            console.log(response.body);
-            $("#msg").append(response.body + "<br>")
+        stompClient.subscribe("/user/" + toUserId + "/message/get", function (response) {
+            console.log("reponse is"+response)
+            var data = JSON.parse(response.body);
+                $("#msg").append("<div id='div1'><img style='height: 20px;width: 20px' src='" + data.fromHeadPicture + "'/></div>" + "<div id='div2'><h4>" + data.fromUsername + "</h4></div>" +
+                    "<div style='width: 200px;margin-bottom: 2px;' class=\"alert alert-info\" role=\"alert\">" + data.msg + "</div>"
+                    + "<p style='font-size: x-small'>" + data.time + "</p>")
         })
     })
 
-    function sendmsg() {
-        var sendid = $("#ids").val();
+    function sendmsgs() {
         var message = $("#sendmsg").val();
         stompClient.send("/message", {}, JSON.stringify({
             msg: message,
-            toUser: sendid,
-            fromUser: id
+            toUser: toUserId,
+            fromUser: fromUserId,
+            fromUsername: fromUsername,
+            toUsername: toUsername,
+            fromHeadPicture: fromUserPicture,
+            toHeadPicture: toUserPicture
+        }));
+
+        stompClient.send("/letter", {}, JSON.stringify({
+            fromUserId:fromUserId,
+            toUserId:toUserId,
         }));
     }
 </script>
